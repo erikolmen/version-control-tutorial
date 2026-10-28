@@ -6,6 +6,18 @@ In this chapter, we'll use Claude Code to perform the same steps from the [Versi
 
 > FYI: Claude Code requires a paid Claude subscription (e.g. Claude Pro). See the [pricing page](https://claude.com/pricing) for more information.
 
+## References
+
+Official References:
+
+  + [Claude Code Docs](https://code.claude.com/docs/en/overview)
+  + [Claude Code Desktop App Docs](https://code.claude.com/docs/en/desktop)
+  + [Claude Code Setup Guide](https://code.claude.com/docs/en/setup)
+
+Related References:
+
+  + [GitHub CLI Docs](https://cli.github.com/manual/)
+
 ## Installation
 
 Claude Code is available as a desktop application (the "Code" tab of the Claude app), and as a command-line utility (the `claude` command). Beginners are encouraged to use the desktop application, which is what we'll use in the rest of this chapter. Users who are comfortable with the command-line may prefer the command-line utility instead.
