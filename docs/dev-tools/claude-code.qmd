@@ -2,9 +2,12 @@
 
 [Claude Code](https://code.claude.com/docs/en/overview) is an AI coding tool made by Anthropic. It can read the files in your project, edit code, and run commands like `git` and `gh` on your behalf. You describe what you want in plain English, and Claude Code figures out which commands to run.
 
-Claude Code is available as a command-line tool, as an extension for VS Code, and as the "Code" tab of the Claude desktop app. This chapter uses the desktop app, which is the most beginner-friendly option.
-
 In this chapter, we will install and configure Claude Code, then use it to perform the [Version Control Workflow](../exercises/1-version-control-workflow/index.qmd) and the [Pull Request Workflow](../exercises/2-pull-request-workflow/index.qmd).
+
+::: {.callout-tip}
+## Do the exercises first
+This chapter assumes you have already completed the [Version Control Workflow](../exercises/1-version-control-workflow/index.qmd) and [Pull Request Workflow](../exercises/2-pull-request-workflow/index.qmd) exercises using GitHub Desktop, and that you have a [GitHub account](./github.qmd). Here we focus on how to do the same steps with Claude Code.
+:::
 
 ::: {.callout-note}
 Claude Code requires a paid Claude subscription (such as Claude Pro). See the [pricing page](https://claude.com/pricing) for current options.
@@ -12,46 +15,89 @@ Claude Code requires a paid Claude subscription (such as Claude Pro). See the [p
 
 ## Installation
 
-Before installing Claude Code, make sure you have [Git installed](./clis/git.qmd).
+There are two ways to use Claude Code:
 
-Download and install the Claude desktop app for Mac or Windows, from the [Claude Code desktop documentation](https://code.claude.com/docs/en/desktop).
+  + **Desktop App (GUI)**: the "Code" tab of the Claude desktop app. You type requests in a chat window, and can click buttons to see the changes and commands. This is the easiest option for beginners, and is the one used in the rest of this chapter.
+  + **Command-line Interface (CLI)**: the `claude` command, which runs inside your terminal. This is useful if you are already comfortable with the terminal.
+
+Choose one of the options below. Option A installs the desktop app. Options B and C install the CLI.
+
+### Option A: Install the Desktop App (Mac and Windows)
+
+Download the Claude desktop app from the [Claude Code desktop documentation](https://code.claude.com/docs/en/desktop):
+
+  + **Mac**: click "Download for macOS", open the downloaded file, and drag the Claude app into your Applications folder.
+  + **Windows**: click "Download for Windows", then run the downloaded installer.
 
 ![Download links for the Claude desktop app, from the Claude Code documentation.](../images/claude-code-install-docs.png)
+
+### Option B: Install the CLI via Node.js (Mac and Windows)
+
+If you have [Node.js](https://nodejs.org/en/download) (version 22 or later) installed, you can install the CLI using `npm`, from the terminal (Mac) or PowerShell (Windows):
+
+```sh
+npm install -g @anthropic-ai/claude-code
+```
+
+### Option C: Install the CLI via Homebrew (Mac only)
+
+If you have [Homebrew](./clis/brew.qmd) installed, you can install the CLI from the terminal:
+
+```sh
+brew install --cask claude-code
+```
+
+After installing the CLI using option B or C, verify the installation by checking the version:
+
+```sh
+claude --version
+```
+
+::: {.callout-note}
+The [official setup guide](https://code.claude.com/docs/en/setup) also provides a one-line install command for the CLI that does not require Node.js or Homebrew, with separate commands for Mac and Windows.
+:::
 
 ## Configuration
 
 ### Logging In
 
-Open the Claude desktop app, and log in with your Claude account. Then click the "Code" tab to start using Claude Code.
+  + **Desktop App**: open the Claude app, log in with your Claude account, then click the "Code" tab.
+  + **CLI**: run the `claude` command from the terminal. The first time you run it, it will open your web browser to log in with your Claude account.
 
-To start a session, choose the folder of the project you want to work on. Claude Code can read and edit the files in that folder, and run commands from inside it.
+### Choosing a Project Folder
 
-<!-- SCREENSHOT TODO (claude-code-config-code-tab.png): the Claude app with the Code tab open and the folder picker visible. Crop out the sidebar if it shows other sessions. -->
+Claude Code works inside one project folder at a time. It can read and edit the files in that folder, and runs commands from inside it.
+
+In the desktop app, use the project folder control, in the row under the prompt box, to choose the folder before sending your first message. When using the CLI, navigate into the folder from the terminal (for example `cd ~/Desktop/my-repo`) before running `claude`.
 
 ### Connecting to GitHub
 
 Claude Code uses the Git installed on your computer, so it can push and pull using the same GitHub credentials that Git already has.
 
-For the Pull Request Workflow, you will also want to install the [GitHub CLI](https://cli.github.com/) (`gh`), which lets Claude Code create repositories and open pull requests for you. After installing it, log in to your GitHub account from the terminal, and follow the prompts:
+For the Pull Request Workflow, you will also need the [GitHub CLI](https://cli.github.com/) (`gh`), which lets Claude Code create repositories and open pull requests. After installing it, log in to your GitHub account from the terminal, and follow the prompts:
 
 ```sh
 gh auth login
 ```
 
-You can verify you are logged in by asking Claude Code something like "Am I logged in to GitHub?", which will run the `gh auth status` command:
-
-```sh
-gh auth status
-# ✓ Logged in to github.com account YOUR_USERNAME (keyring)
-```
-
-<!-- SCREENSHOT TODO (claude-code-config-github-check.png): Claude Code running `gh auth status`, showing "Logged in to github.com account ...". -->
+You can verify you are logged in by asking Claude Code "Am I logged in to GitHub?", which will run the `gh auth status` command.
 
 ### Permissions
 
-Claude Code can be configured to ask for your permission before editing files or running commands. As a beginner, it is a good idea to read each command before it runs. This is a great way to learn which Git commands perform each step of the workflow!
+Claude Code can ask for your permission before editing files or running commands. In the desktop app, use the mode selector, in the row under the prompt box, to choose a permission mode:
 
-You can expand each step in the conversation to see the exact command Claude Code ran, and its output.
+  + **Manual**: Claude asks before editing files or running commands. Recommended for beginners, so you can read each change and command before it happens.
+  + **Accept edits**: Claude edits files without asking, but still asks before running other commands.
+
+See the [desktop documentation](https://code.claude.com/docs/en/desktop) for the other modes.
+
+### Finding Your Way Around the Desktop App
+
+Even when Claude Code does the work, it is important to understand what happened. These parts of the desktop app help you follow along:
+
+  + **Steps in the conversation**: each command Claude Code runs appears as a step in the chat. Click a step to expand it, and see the exact command and its output.
+  + **Changes (diff view)**: click "Changes" in the session's title bar to see each file's changes, line by line, similar to the "Changes" tab of GitHub Desktop.
+  + **Terminal**: click "Terminal" in the session's title bar (or press Ctrl+\`) to open a terminal in your project folder. You can run Git commands yourself here, like `git status` or `git log`.
 
 ## Usage
 
@@ -69,17 +115,17 @@ Claude Code runs the `gh repo create` command to do this:
 gh repo create claude-code-practice --public --add-readme --clone
 ```
 
-<!-- SCREENSHOT TODO (claude-code-vc-create-repo.png): Claude Code creating and cloning the repo. -->
+Alternatively, you can create the repository on the GitHub website, and clone it yourself, as you did in the original exercise.
 
 The new repository now exists on GitHub:
 
 ![The new repository on GitHub, containing only a README file.](../images/claude-code-vc-new-repo-github.png)
 
-**Edit a file.** Ask Claude Code to edit the README file. For example:
+**Edit a file.** Choose the new repository's folder as your project folder, then ask Claude Code to edit the README file. For example:
 
 > Update the README.md file to have a heading "My First Repo!", a sentence saying it uses markdown, a bulleted list with three items, and a link to the Markdown Cheat Sheet.
 
-<!-- SCREENSHOT TODO (claude-code-vc-edit-readme.png): Claude Code editing README.md. -->
+Click "Changes" in the title bar to review exactly what was changed in the file.
 
 **Make a commit.** Ask Claude Code to commit the change:
 
@@ -92,8 +138,6 @@ git add README.md
 git commit -m "Update README contents"
 ```
 
-<!-- SCREENSHOT TODO (claude-code-vc-commit.png): Claude Code running git add / git commit. -->
-
 **Push to GitHub.** Ask Claude Code to push the changes:
 
 > Push the changes to GitHub.
@@ -102,7 +146,7 @@ git commit -m "Update README contents"
 git push origin main
 ```
 
-<!-- SCREENSHOT TODO (claude-code-vc-push.png): Claude Code running git push. -->
+If you prefer, you can run any of these Git commands yourself, in the app's Terminal.
 
 Finally, visit the repository on GitHub to verify the updated README contents are there:
 
@@ -127,8 +171,6 @@ git checkout main
 git pull origin main
 ```
 
-<!-- SCREENSHOT TODO (claude-code-pr-pull-main.png): Claude Code running git checkout main / git pull. -->
-
 **Create a feature branch, and make a commit.** Ask Claude Code to create a new branch, make a change, and commit it:
 
 > Create a new branch called "new-feature-123". Then add an "About" section to the README, and commit the change.
@@ -140,7 +182,7 @@ git add README.md
 git commit -m "Add About section to README"
 ```
 
-<!-- SCREENSHOT TODO (claude-code-pr-branch-commit.png): Claude Code creating the branch and committing. -->
+Before pushing, click "Changes" in the title bar to review the changes on your feature branch.
 
 **Push the branch and open a pull request.** Ask Claude Code:
 
@@ -153,7 +195,7 @@ git push -u origin new-feature-123
 gh pr create --base main --head new-feature-123 --title "Add About section to README"
 ```
 
-<!-- SCREENSHOT TODO (claude-code-pr-open.png): Claude Code running git push and gh pr create, showing the PR link. -->
+In the desktop app, the new pull request also appears in the "Changes" card of the session details panel, along with the status of its checks.
 
 **Review the pull request.** Visit the pull request on GitHub:
 
@@ -163,15 +205,13 @@ Click the "Files changed" tab to review the changes, and optionally leave some c
 
 ![Reviewing the changes in the "Files changed" tab of the pull request.](../images/claude-code-pr-files-changed.png)
 
-**Merge the pull request.** When you are satisfied with the changes, merge the pull request. You can click the "Merge pull request" button on GitHub, or ask Claude Code:
+**Merge the pull request.** When you are satisfied with the changes, click the "Merge pull request" button on GitHub, as you did in the original exercise. Alternatively, ask Claude Code:
 
 > Merge the pull request, delete the branch, and update my local main branch.
 
 ```sh
 gh pr merge 1 --merge --delete-branch
 ```
-
-<!-- SCREENSHOT TODO (claude-code-pr-merge.png): Claude Code running gh pr merge. -->
 
 ![The merged pull request on GitHub.](../images/claude-code-pr-merged-github.png)
 
