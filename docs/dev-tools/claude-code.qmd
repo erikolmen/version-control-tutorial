@@ -143,8 +143,8 @@ Ask Claude Code to commit the changes, for example: "Commit this change with the
 Claude Code will run commands like:
 
 ```sh
-git add README.md
-git commit -m "Update README contents"
+git add README.md # stages the changes to the README file
+git commit -m "Update README contents" # saves a new version, with the given message
 ```
 
 #### Pushing Changes
@@ -154,7 +154,7 @@ Ask Claude Code to push the changes to GitHub, for example: "Push the changes to
 Claude Code will run a command like:
 
 ```sh
-git push origin main
+git push origin main # uploads the new commit(s) to the main branch on GitHub
 ```
 
 After pushing, visit the repository on GitHub, where you should see the updated README file:
@@ -178,8 +178,8 @@ Ask Claude Code to make sure the local main branch is up to date, for example: "
 Claude Code will run commands like:
 
 ```sh
-git checkout main
-git pull origin main
+git checkout main # switches to the main branch
+git pull origin main # downloads any new changes from the main branch on GitHub
 ```
 
 #### Creating a Feature Branch
@@ -189,7 +189,7 @@ Ask Claude Code to create a new branch, make a change, and commit it, for exampl
 Claude Code will run commands like:
 
 ```sh
-git checkout -b new-feature-123
+git checkout -b new-feature-123 # creates and switches to a new branch
 
 # (edits the README file)
 
@@ -204,7 +204,9 @@ Ask Claude Code to push the branch and open a pull request, for example: "Push t
 Claude Code will run commands like:
 
 ```sh
-git push -u origin new-feature-123
+git push -u origin new-feature-123 # uploads the feature branch to GitHub
+
+# opens a pull request to merge the feature branch into the main branch:
 gh pr create --base main --head new-feature-123 --title "Add About section to README"
 ```
 
