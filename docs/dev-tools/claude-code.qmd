@@ -74,7 +74,21 @@ Open the Claude app, and login with your Claude account. Then click on the "Code
 
 Claude Code uses the Git installed on your computer, so it will push and pull using the same GitHub credentials Git already uses.
 
-To create repositories and open pull requests, Claude Code also needs the [GitHub CLI](https://cli.github.com/) (`gh`). After installing the GitHub CLI, login with your GitHub account, and follow the prompts:
+To create repositories and open pull requests, Claude Code also needs the [GitHub CLI](https://cli.github.com/) (`gh`).
+
+Mac users can install the GitHub CLI via [Homebrew](./clis/brew.qmd):
+
+```sh
+brew install gh
+```
+
+Windows users can install the GitHub CLI via the installer on the [GitHub CLI website](https://cli.github.com/), or via the `winget` command:
+
+```sh
+winget install --id GitHub.cli
+```
+
+After installing the GitHub CLI, restart your terminal application, then login with your GitHub account, and follow the prompts:
 
 ```sh
 gh auth login
