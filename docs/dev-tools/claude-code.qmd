@@ -1,0 +1,188 @@
+# Claude Code
+
+[Claude Code](https://code.claude.com/docs/en/overview) is an AI coding tool made by Anthropic. It can read the files in your project, edit code, and run commands like `git` and `gh` on your behalf. You describe what you want in plain English, and Claude Code figures out which commands to run.
+
+Claude Code is available as a command-line tool, as an extension for VS Code, and as the "Code" tab of the Claude desktop app. This chapter uses the desktop app, which is the most beginner-friendly option.
+
+In this chapter, we will install and configure Claude Code, then use it to perform the [Version Control Workflow](../exercises/1-version-control-workflow/index.qmd) and the [Pull Request Workflow](../exercises/2-pull-request-workflow/index.qmd).
+
+::: {.callout-note}
+Claude Code requires a paid Claude subscription (such as Claude Pro). See the [pricing page](https://claude.com/pricing) for current options.
+:::
+
+## Installation
+
+Before installing Claude Code, make sure you have [Git installed](./clis/git.qmd).
+
+Download and install the Claude desktop app for Mac or Windows, from the [Claude Code desktop documentation](https://code.claude.com/docs/en/desktop).
+
+![Download links for the Claude desktop app, from the Claude Code documentation.](../images/claude-code-install-docs.png)
+
+## Configuration
+
+### Logging In
+
+Open the Claude desktop app, and log in with your Claude account. Then click the "Code" tab to start using Claude Code.
+
+To start a session, choose the folder of the project you want to work on. Claude Code can read and edit the files in that folder, and run commands from inside it.
+
+<!-- SCREENSHOT TODO (claude-code-config-code-tab.png): the Claude app with the Code tab open and the folder picker visible. Crop out the sidebar if it shows other sessions. -->
+
+### Connecting to GitHub
+
+Claude Code uses the Git installed on your computer, so it can push and pull using the same GitHub credentials that Git already has.
+
+For the Pull Request Workflow, you will also want to install the [GitHub CLI](https://cli.github.com/) (`gh`), which lets Claude Code create repositories and open pull requests for you. After installing it, log in to your GitHub account from the terminal, and follow the prompts:
+
+```sh
+gh auth login
+```
+
+You can verify you are logged in by asking Claude Code something like "Am I logged in to GitHub?", which will run the `gh auth status` command:
+
+```sh
+gh auth status
+# ✓ Logged in to github.com account YOUR_USERNAME (keyring)
+```
+
+<!-- SCREENSHOT TODO (claude-code-config-github-check.png): Claude Code running `gh auth status`, showing "Logged in to github.com account ...". -->
+
+### Permissions
+
+Claude Code can be configured to ask for your permission before editing files or running commands. As a beginner, it is a good idea to read each command before it runs. This is a great way to learn which Git commands perform each step of the workflow!
+
+You can expand each step in the conversation to see the exact command Claude Code ran, and its output.
+
+## Usage
+
+### Version Control Workflow
+
+This section follows the steps of the [Version Control Workflow](../exercises/1-version-control-workflow/index.qmd) exercise.
+
+**Create a repository.** Ask Claude Code to create a new repository on GitHub, and clone it to your computer. For example:
+
+> Create a new public GitHub repo called "claude-code-practice" with a README, and clone it to my Desktop.
+
+Claude Code runs the `gh repo create` command to do this:
+
+```sh
+gh repo create claude-code-practice --public --add-readme --clone
+```
+
+<!-- SCREENSHOT TODO (claude-code-vc-create-repo.png): Claude Code creating and cloning the repo. -->
+
+The new repository now exists on GitHub:
+
+![The new repository on GitHub, containing only a README file.](../images/claude-code-vc-new-repo-github.png)
+
+**Edit a file.** Ask Claude Code to edit the README file. For example:
+
+> Update the README.md file to have a heading "My First Repo!", a sentence saying it uses markdown, a bulleted list with three items, and a link to the Markdown Cheat Sheet.
+
+<!-- SCREENSHOT TODO (claude-code-vc-edit-readme.png): Claude Code editing README.md. -->
+
+**Make a commit.** Ask Claude Code to commit the change:
+
+> Commit this change with the message "Update README contents".
+
+Claude Code stages the file and makes a commit:
+
+```sh
+git add README.md
+git commit -m "Update README contents"
+```
+
+<!-- SCREENSHOT TODO (claude-code-vc-commit.png): Claude Code running git add / git commit. -->
+
+**Push to GitHub.** Ask Claude Code to push the changes:
+
+> Push the changes to GitHub.
+
+```sh
+git push origin main
+```
+
+<!-- SCREENSHOT TODO (claude-code-vc-push.png): Claude Code running git push. -->
+
+Finally, visit the repository on GitHub to verify the updated README contents are there:
+
+![The updated README on GitHub, after Claude Code pushed the commit.](../images/claude-code-vc-updated-readme-github.png)
+
+You can also see the new commit in the repository's commit history:
+
+![The commit history on GitHub, showing the "Update README contents" commit.](../images/claude-code-vc-commits-github.png)
+
+Repeat the edit, commit, and push steps at least one more time for good measure.
+
+### Pull Request Workflow
+
+This section follows the steps of the [Pull Request Workflow](../exercises/2-pull-request-workflow/index.qmd) exercise, using the same repository.
+
+**Update the main branch.** Ask Claude Code to make sure your local main branch is up to date:
+
+> Check out the main branch and pull the latest changes from GitHub.
+
+```sh
+git checkout main
+git pull origin main
+```
+
+<!-- SCREENSHOT TODO (claude-code-pr-pull-main.png): Claude Code running git checkout main / git pull. -->
+
+**Create a feature branch, and make a commit.** Ask Claude Code to create a new branch, make a change, and commit it:
+
+> Create a new branch called "new-feature-123". Then add an "About" section to the README, and commit the change.
+
+```sh
+git checkout -b new-feature-123
+# (Claude Code edits README.md)
+git add README.md
+git commit -m "Add About section to README"
+```
+
+<!-- SCREENSHOT TODO (claude-code-pr-branch-commit.png): Claude Code creating the branch and committing. -->
+
+**Push the branch and open a pull request.** Ask Claude Code:
+
+> Push this branch to GitHub and open a pull request against main.
+
+Claude Code pushes the branch, then uses the GitHub CLI to open the pull request, and gives you a link to it:
+
+```sh
+git push -u origin new-feature-123
+gh pr create --base main --head new-feature-123 --title "Add About section to README"
+```
+
+<!-- SCREENSHOT TODO (claude-code-pr-open.png): Claude Code running git push and gh pr create, showing the PR link. -->
+
+**Review the pull request.** Visit the pull request on GitHub:
+
+![The pull request on GitHub.](../images/claude-code-pr-github.png)
+
+Click the "Files changed" tab to review the changes, and optionally leave some comments:
+
+![Reviewing the changes in the "Files changed" tab of the pull request.](../images/claude-code-pr-files-changed.png)
+
+**Merge the pull request.** When you are satisfied with the changes, merge the pull request. You can click the "Merge pull request" button on GitHub, or ask Claude Code:
+
+> Merge the pull request, delete the branch, and update my local main branch.
+
+```sh
+gh pr merge 1 --merge --delete-branch
+```
+
+<!-- SCREENSHOT TODO (claude-code-pr-merge.png): Claude Code running gh pr merge. -->
+
+![The merged pull request on GitHub.](../images/claude-code-pr-merged-github.png)
+
+To repeat the workflow, go back to the first step, and ask Claude Code to check out main and pull the latest changes (which now include your merged pull request).
+
+## Tips
+
+  + **Ask Claude Code to explain.** If you are not sure what a command does, ask, for example: "What does `git pull` do?", or "What is the status of my repository right now?"
+  + **Read the commands.** Expand each step to see the exact Git command that ran. The goal is to learn the workflow, not just to get it done.
+  + **Be specific.** Name the branch, commit message, and files you want, so Claude Code does exactly what you expect.
+
+## Success Criteria
+
+You should be able to use Claude Code to commit and push changes to a GitHub repository, and to open and merge a pull request from a feature branch.
