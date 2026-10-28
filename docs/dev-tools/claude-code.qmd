@@ -32,7 +32,19 @@ On Mac, open the downloaded file, and drag the Claude app into your "Application
 
 ### Installing the Command-line Utility (Optional)
 
-If you'd like to use the command-line utility instead, you can install it via Node.js (Mac or Windows), or via [Homebrew](./clis/brew.qmd) (Mac only):
+First see if the command-line utility is already installed:
+
+```sh
+# Mac OS:
+which claude
+
+# Windows OS:
+where claude
+```
+
+If this command produces a filepath-looking output, the command-line utility is already installed, and you can skip down to the "Configuration" section.
+
+Otherwise, if you'd like to use the command-line utility instead, you can install it via Node.js (Mac or Windows), or via [Homebrew](./clis/brew.qmd) (Mac only):
 
 ```sh
 # via Node.js (requires Node.js version 22 or later):
