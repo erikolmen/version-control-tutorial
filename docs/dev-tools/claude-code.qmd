@@ -28,6 +28,8 @@ Download the Claude desktop app from the [Claude Code desktop docs](https://code
 
 On Mac, open the downloaded file, and drag the Claude app into your "Applications" folder. On Windows, run the downloaded installer.
 
+> NOTE: Claude Code uses Git to perform version control operations, so make sure you have [installed Git](./clis/git.qmd) as well. Windows users are recommended to install Git for Windows (which includes Git Bash), so Claude Code can use it to run commands.
+
 ![Download links for the Claude desktop app.](../images/claude-code-install-docs.png)
 
 ### Installing the Command-line Utility (Optional)
