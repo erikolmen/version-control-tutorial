@@ -106,11 +106,17 @@ gh auth status #> ✓ Logged in to github.com account YOUR_USERNAME
 
 Claude Code can ask for permission before editing files or running commands. Beginners are encouraged to choose the "Manual" permission mode (using the mode selector, below the prompt box), so you can review each change and command before it happens.
 
+![The prompt box in the Claude Code desktop app. The permission mode selector is below it, on the left (here showing "Auto").](../images/claude-code-app-prompt-box.png)
+
 ## Usage
 
 To start a session, use the project folder selector (below the prompt box) to choose the folder of the repository you want to work on. Then type your requests into the prompt box.
 
 As Claude Code works, each command it runs shows up as a step in the conversation. Click on a step to see the exact command and its output. You can also click the "Changes" button at the top of the window to review changes to each file (similar to the "Changes" tab in GitHub Desktop), or click the "Terminal" button to run Git commands yourself.
+
+For example, here is Claude Code editing a file, committing the change, and pushing it to GitHub. Click on the "Edited README.md, ran 2 commands" step to see the exact changes and commands:
+
+![Claude Code editing, committing, and pushing a change.](../images/claude-code-app-edit-commit-push.png)
 
 ### Version Control Workflow
 
