@@ -114,27 +114,23 @@ To start a session, use the project folder selector (below the prompt box) to ch
 
 As Claude Code works, each command it runs shows up as a step in the conversation. Click on a step to see the exact command and its output. You can also click the "Changes" button at the top of the window to review changes to each file (similar to the "Changes" tab in GitHub Desktop), or click the "Terminal" button to run Git commands yourself.
 
-For example, here is Claude Code editing a file, committing the change, and pushing it to GitHub. Click on the "Edited README.md, ran 2 commands" step to see the exact changes and commands:
-
-![Claude Code editing, committing, and pushing a change.](../images/claude-code-app-edit-commit-push.png)
-
 ### Version Control Workflow
 
 These steps correspond with the [Version Control Workflow](../exercises/1-version-control-workflow/index.qmd) exercise.
 
 #### Creating a Repository
 
-Ask Claude Code to create a new repository on GitHub and clone it, for example: "Create a new public GitHub repo called claude-code-practice with a README, and clone it to my Desktop".
+Ask Claude Code to create a new repository on GitHub and clone it, for example: "Create a new public GitHub repo called claude-code-demo with a README, and clone it to my Desktop".
 
 Claude Code will run a command like:
 
 ```sh
-gh repo create claude-code-practice --public --add-readme --clone
+gh repo create claude-code-demo --public --add-readme --clone
 ```
 
-> NOTE: alternatively, you can create the repository via the GitHub website, and clone it yourself, like you did in the original exercise.
+![Claude Code creating and cloning a new repository.](../images/claude-code-app-vc-create-repo.png)
 
-![The new repository on GitHub.](../images/claude-code-vc-new-repo-github.png)
+> NOTE: alternatively, you can create the repository via the GitHub website, and clone it yourself, like you did in the original exercise.
 
 #### Editing a File
 
@@ -153,6 +149,8 @@ git add README.md # stages the changes to the README file
 git commit -m "Update README contents" # saves a new version, with the given message
 ```
 
+![Claude Code editing the README file and committing the change. The "+9 -1" shows how many lines were added and removed.](../images/claude-code-app-vc-edit-commit.png)
+
 #### Pushing Changes
 
 Ask Claude Code to push the changes to GitHub, for example: "Push the changes to GitHub".
@@ -163,13 +161,9 @@ Claude Code will run a command like:
 git push origin main # uploads the new commit(s) to the main branch on GitHub
 ```
 
-After pushing, visit the repository on GitHub, where you should see the updated README file:
+![Claude Code pushing the commit to GitHub.](../images/claude-code-app-vc-push.png)
 
-![The updated README on GitHub.](../images/claude-code-vc-updated-readme-github.png)
-
-You should also see the new commit in the repository's commit history:
-
-![The commit history on GitHub.](../images/claude-code-vc-commits-github.png)
+After pushing, visit the repository on GitHub, where you should see the updated README file.
 
 Repeat the editing, committing, and pushing steps at least one more time for good measure.
 
@@ -203,6 +197,8 @@ git add README.md
 git commit -m "Add About section to README"
 ```
 
+![Claude Code updating the main branch, creating a feature branch, and committing a change.](../images/claude-code-app-pr-branch-commit.png)
+
 #### Opening a Pull Request
 
 Ask Claude Code to push the branch and open a pull request, for example: "Push this branch to GitHub and open a pull request".
@@ -216,13 +212,9 @@ git push -u origin new-feature-123 # uploads the feature branch to GitHub
 gh pr create --base main --head new-feature-123 --title "Add About section to README"
 ```
 
-Visit the pull request on GitHub:
+![Claude Code pushing the feature branch and opening a pull request, with a link to the pull request.](../images/claude-code-app-pr-open.png)
 
-![The pull request on GitHub.](../images/claude-code-pr-github.png)
-
-Click on the "Files changed" tab to review the changes, and optionally leave some comments:
-
-![The "Files changed" tab of the pull request.](../images/claude-code-pr-files-changed.png)
+Click the link to visit the pull request on GitHub, where you can review the changes in the "Files changed" tab, and optionally leave some comments.
 
 #### Merging the Pull Request
 
@@ -230,7 +222,7 @@ When you are satisfied with the changes, click the "Merge pull request" button o
 
 > FYI: you can also ask Claude Code to merge the pull request for you (e.g. "Merge the pull request and update my local main branch"), in which case it will use the `gh pr merge` command.
 
-![The merged pull request on GitHub.](../images/claude-code-pr-merged-github.png)
+![Claude Code merging a pull request, deleting the feature branch, and updating the local main branch.](../images/claude-code-app-pr-merge.png)
 
 To repeat the process, start again from the "Updating the Main Branch" step.
 
